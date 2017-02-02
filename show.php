@@ -2,57 +2,53 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<?php
-			//System File
-			include('_config.php');
-
+<?php
+			// System File
+				include('_config.php');
 			// Setting I
-			$set=$db->query("SELECT * FROM settings WHERE userID='1'");
-			$set = $set->fetchArray(SQLITE3_ASSOC);
-			$set_refresh = $set['refresh'];
-
-
-			//Set Style
-			echo'
-			<style>
-				.love {
-				  padding-bottom: '.$set['style'].'px;
-				}
-			</style>';
-
-
+				$set=$db->query("SELECT * FROM settings WHERE userID='1'");
+				$set = $set->fetchArray(SQLITE3_ASSOC);
+				$set_refresh = $set['refresh'];
 			// Refresh
-			if (isset($_GET['start'])) {
-				$start = (int) $_GET['start'];
-			} else {
-				$start = 0;
-			}
-			$wert = $start + 12;
-
-			if($set_refresh == '1') {
-				$result = $db->query("SELECT * FROM number");
-				$inhalt = count($result);
-				if($wert < $inhalt){
-					$site = 'show.php?start='.$wert;
-				} else {
-					$site = 'show.php';
+				if (isset($_GET['start'])) {
+					$start = (int) $_GET['start'];
 				}
-				$time = $set['refresh_time'];
-				$timescript = 1000*$set['refresh_time']-1000;
-				redirect($site,$time);
-			} else {
-				echo '';
-				//Emergency Refresh
-				redirect("show.php",60);
-			}
-		?>
-
+				else {
+					$start = 0;
+				}
+				$wert = $start + 12;
+				if($set_refresh == '1') {
+					$result = $db->query("SELECT * FROM number");
+					$inhalt = count($result);
+						if($wert < $inhalt){
+							$site = 'show.php?start='.$wert;
+						}
+						else {
+							$site = 'show.php';
+						}
+					$time = $set['refresh_time'];
+					$timescript = 1000*$set['refresh_time']-1000;
+					redirect($site,$time);
+				}
+				else {
+					echo '';
+					//Emergency Refresh
+						redirect("show.php",60);
+				}
+			// Set Style
+				echo'
+				<style>
+					.love {
+						padding-bottom: '.$set['style'].'px;
+					}
+				</style>';
+?>
     <title>Lovebox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="Expires" content="-1">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css?v=<?php echo $set['css']; ?>" rel="stylesheet">
-	<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">
@@ -61,11 +57,10 @@
 				$ds=$db->query("SELECT * FROM number ORDER BY CAST(number AS SIGNED) LIMIT ".$start.",12");
 				$anz=count($ds);
 				if($anz) {
-				while($ausgabe = $ds->fetchArray(SQLITE3_ASSOC)) {
-					echo'<div class="fade-in col-md-3 love center-block">'.$ausgabe['number'].'</div>
-						';
-				}
-				} else { //echo'<div class="col-md-3 love center-block">000</div>';
+					while($ausgabe = $ds->fetchArray(SQLITE3_ASSOC)) {
+						echo'<div class="fade-in col-md-3 love center-block">'.$ausgabe['number'].'</div>
+							';
+					}
 				}
 			?>
 			</div>

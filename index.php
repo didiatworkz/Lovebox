@@ -25,7 +25,6 @@ require_once("_config.php");
 	<script src="js/jquery.toaster.js"></script>
   </head>
   <body>
-
   <div class="warp">
 	<div class="container">
  <?php
@@ -40,7 +39,7 @@ require_once("_config.php");
 		}else{
 		//Der Logout hat nocht geklappt
 		$logedout=FALSE;
-		}
+  }
 		}
 		if($_SESSION['passwort'] == $Zugangspasswort && $_SESSION['user']==$Benutzername){
 

@@ -2,11 +2,15 @@
 ## What is this?
 Lovebox is a flirt partys!
 
-Screenshot from Settings:
+Screenshot from Settings
+---------------------------------------
 ![Screenshot Settings](http://www.atworkz.de/_git/lovebox/index.png)
 
 Screenshot from Screenwindow
+---------------------------------------
 ![Screenshot show](http://www.atworkz.de/_git/lovebox/show.png)
+
+
 
 ## Install
 1. Upload Files to your Webserver

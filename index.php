@@ -11,7 +11,7 @@ require_once("_config.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@ require_once("_config.php");
 	<script src="js/jquery.toaster.js"></script>
   </head>
   <body>
-	
+
   <div class="warp">
 	<div class="container">
  <?php
@@ -43,9 +43,9 @@ require_once("_config.php");
 		}
 		}
 		if($_SESSION['passwort'] == $Zugangspasswort && $_SESSION['user']==$Benutzername){
-		
+
 			//$result = $db->query("SELECT * FROM number");
-			
+
 			$error_time = $set['error'];
 			$stat = $db->query("SELECT * FROM settings");
 			$stat = $stat->fetchArray(SQLITE3_ASSOC);
@@ -73,12 +73,12 @@ if($_POST["addsave"]) {
 	$log=$db->query("SELECT * FROM log WHERE number='".$setnumber."'");
 	$log = $log->fetchArray(SQLITE3_ASSOC);
 	$count = $log['count']+1;
-	
 
-	
+
+
 	if($setnumber != '') {
 	if($setnumber!==$check['number']) {
-		
+
 			$db->exec("INSERT INTO number (number) values('".$setnumber."')");
 			if($setnumber!==$log['number']) {
 			$db->exec("INSERT INTO log (number, date, time, count) values('".$setnumber."', '".$datum."', '".$zeit."', '1')"); }
@@ -93,7 +93,7 @@ if($_POST["addsave"]) {
 	sysinfo('danger', 'Eingabe &uuml;berpr&uuml;fen!!'); }
 	} else {
 	sysinfo('danger', 'Eingabe ung&uuml;ltig!!'); }
-	
+
 }
 
 if($_GET[add]) {
@@ -110,7 +110,7 @@ if($_POST["remove"] AND $_POST['enter'] == $set['clean']) {
 	$db->query("DELETE FROM number");
 	$db->query("DELETE FROM log");
 	echo'<div class="alert alert-warning"><i class="fa fa-chain-broken"></i> Alle Nummern aus dem System entfernt!</div>';
-	redirect("index.php","",$error_time);
+	redirect("index.php",$error_time);
 }
 if($_GET["testmode"]) {
 	$db->exec("UPDATE settings SET test='1' WHERE userID='1'");
@@ -142,8 +142,8 @@ if($_GET["testmode_off"]) {
 }
 if($_POST["saveset"]) {
 	$refresh=$_POST["refresh"];
-	$static=$_POST["static"];	
-	$time=$_POST["refresh_time"];	
+	$static=$_POST["static"];
+	$time=$_POST["refresh_time"];
 	$clean=$_POST["clean"];
 	$e_time=$_POST["e_time"];
 	$style=$_POST["style"];
@@ -155,16 +155,16 @@ if($_POST["saveset"]) {
 	if($_POST["pass"] !== '') {
 	$pass=md5($_POST["pass"]); } else {
 	$pass=$set['password']; }
-	if($time AND $clean) {					
-		$db->exec("UPDATE settings SET username='".$user."', password='".$pass."', refresh='".$refresh."', error='".$e_time."', style='".$style."', static='".$static."', refresh_time='".$time."', clean='".$clean."', banner='".$banner."', banner_text='".$banner_text."', blink='".$blink."', arrow='".$arrow."' WHERE userID='1'");	
+	if($time AND $clean) {
+		$db->exec("UPDATE settings SET username='".$user."', password='".$pass."', refresh='".$refresh."', error='".$e_time."', style='".$style."', static='".$static."', refresh_time='".$time."', clean='".$clean."', banner='".$banner."', banner_text='".$banner_text."', blink='".$blink."', arrow='".$arrow."' WHERE userID='1'");
 		sysinfo('success', 'Einstellungen gespeichert','1');
-	} 
+	}
 else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); }
 
 }
-	
-	
-	
+
+
+
 	$ds=$db->query("SELECT * FROM number ORDER BY CAST(number AS SIGNED)");
 	if ($set['test'] == '1') {
 	 echo'<div class="alert alert-warning text-center"><h2><i class="fa fa-th"></i> Kalibrierung ist aktiv!</h2><br /><a class="btn btn-danger" href="index.php?testmode_off=1"><i class="fa fa-times"></i> Kalibrierung deaktivieren</a></div>'; }
@@ -217,7 +217,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 		Um die Datenbank zu leeren bitte "'.$set['clean'].'" eingeben<br />
 		  <input type="text" name="enter" class="form-control"><input class="btn btn-warning pull-right" type="submit" name="remove" value="ausf&uuml;hren" /> <br /><br />
 		</form></div>-->
-		
+
 		<div class="row">
   <div class="col-md-4 col-md-offset-8">
   <form method="post" action="index.php" enctype="multipart/form-data">
@@ -236,15 +236,15 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 
 ?>
 
-	
+
 	  <!-- Settingsmen&uuml; -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 			<div class="modal-content">
 			  <div class="modal-body">
 				<?php
-				if ($set['test'] == '1'){ $li_sty =''; $li_set ='active'; 
-						} else { $li_sty =''; $li_set ='active'; 
+				if ($set['test'] == '1'){ $li_sty =''; $li_set ='active';
+						} else { $li_sty =''; $li_set ='active';
 						}
 				echo'
 				<ul class="nav nav-tabs">
@@ -269,8 +269,8 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						<td><input type="text" name="refresh_time" class="form-control" value="'.$set['refresh_time'].'"></td>
 					  </tr>
 					  </tbody>
-					  
-					  
+
+
 					  <thead>
 						<td colspan="2"><br /><br /><h4>Lovebox <span class="text-muted">Style</span></h4></td>
 					  </thead>
@@ -330,8 +330,8 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="text-center">'; if ($set['test'] == '1'){ echo '<a class="btn btn-danger" href="index.php?testmode_off=1"><i class="fa fa-th"></i> Kalibrierung deaktivieren</a>'; 
-						} else { echo'<a class="btn btn-primary" href="index.php?testmode=1"><i class="fa fa-th"></i> Kalibrierung aktivieren</a>'; 
+						<td colspan="2" class="text-center">'; if ($set['test'] == '1'){ echo '<a class="btn btn-danger" href="index.php?testmode_off=1"><i class="fa fa-th"></i> Kalibrierung deaktivieren</a>';
+						} else { echo'<a class="btn btn-primary" href="index.php?testmode=1"><i class="fa fa-th"></i> Kalibrierung aktivieren</a>';
 						} echo'</td>
 					  </tr>
 					  </tbody>
@@ -352,7 +352,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						<td><input type="text" name="user" class="form-control" value="'.$set['username'].'"><br /><input type="password" onfocus="this.select()" name="pass" class="form-control" placeholder="Password"></td>
 					  </tr>
 					</tbody>
-					
+
 
 					<thead>
 						<td colspan="2"><br /><br /><h4>Backend <span class="text-muted">Einstellungen</span></h4></td>
@@ -381,7 +381,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 			</div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-		
+
 		<!-- Statistik -->
 		<div class="modal fade" id="Stat" tabindex="-1" role="dialog" aria-labelledby="StatLabel" aria-hidden="true">
 		  <div class="modal-dialog">
@@ -493,7 +493,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						  ';
 						} echo'</tbody>
 					  </table>';
-					} else { echo'<div class="alert alert-info"><h2>Keine Eintr&auml;ge</h2></div>'; } 
+					} else { echo'<div class="alert alert-info"><h2>Keine Eintr&auml;ge</h2></div>'; }
 				?>
 				</div>
 				  </div>
@@ -508,9 +508,9 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 	<div class="container text-center">
 	<p>&copy; <?php echo date(Y); ?> by <a href="http://www.atworkz.de" target="_blank">@workz.de</a> | Lovebox <?php echo $system_version; ?> </p>
       </div>
-	</div>  
-		
-	
+	</div>
+
+
 	<?php
 	}else{ //Ende Sesson
 
@@ -537,21 +537,21 @@ sysinfo('danger', 'Die eingegebenen Login-Daten sind nicht korrekt!'); }
                 </form>
             </div>
         </div>
-        
+
 </div>
  	<div class="footer">
 	<div class="container text-center text-white">
 	<span class="label label-info">Lovebox <?php echo $system_version; ?></span><br />
 	<span class="label label-default">&copy; <?php echo date(Y); ?> by <a href="http://www.atworkz.de" target="_blank">@workz.de</a></span>
       </div>
-	</div>  
+	</div>
 <?php
 }
 $db = close();
 ?>
-   
 
 
-	
+
+
   </body>
 </html>

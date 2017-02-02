@@ -4,14 +4,14 @@
 		<meta charset="utf-8">
 		<?php
 			//System File
-			include('_config.php'); 
+			include('_config.php');
 
 			// Setting I
 			$set=$db->query("SELECT * FROM settings WHERE userID='1'");
 			$set = $set->fetchArray(SQLITE3_ASSOC);
 			$set_refresh = $set['refresh'];
-			
-			
+
+
 			//Set Style
 			echo'
 			<style>
@@ -19,8 +19,8 @@
 				  padding-bottom: '.$set['style'].'px;
 				}
 			</style>';
-			
-			
+
+
 			// Refresh
 			if (isset($_GET['start'])) {
 				$start = (int) $_GET['start'];
@@ -28,7 +28,7 @@
 				$start = 0;
 			}
 			$wert = $start + 12;
-				
+
 			if($set_refresh == '1') {
 				$result = $db->query("SELECT * FROM number");
 				$inhalt = count($result);
@@ -39,14 +39,14 @@
 				}
 				$time = $set['refresh_time'];
 				$timescript = 1000*$set['refresh_time']-1000;
-				redirect($site,"",$time);
-			} else { 
+				redirect($site,$time);
+			} else {
 				echo '';
 				//Emergency Refresh
-				redirect("show.php","",60);
+				redirect("show.php",60);
 			}
 		?>
-    
+
     <title>Lovebox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Expires" content="-1">
@@ -65,7 +65,7 @@
 					echo'<div class="fade-in col-md-3 love center-block">'.$ausgabe['number'].'</div>
 						';
 				}
-				} else { //echo'<div class="col-md-3 love center-block">000</div>'; 
+				} else { //echo'<div class="col-md-3 love center-block">000</div>';
 				}
 			?>
 			</div>

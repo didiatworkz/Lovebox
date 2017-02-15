@@ -47,7 +47,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Expires" content="-1">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css?v=<?php echo $set['css']; ?>" rel="stylesheet">
+    <link href="css/bootstrap.css?v=<?php echo $set["css"]; ?>" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body>
@@ -58,7 +58,7 @@
 				$anz=count($ds);
 				if($anz) {
 					while($ausgabe = $ds->fetchArray(SQLITE3_ASSOC)) {
-						echo'<div class="fade-in col-md-3 love center-block">'.$ausgabe['number'].'</div>
+						echo'<div class="fade-in col-md-3 love center-block">'.$ausgabe["number"].'</div>
 							';
 					}
 				}
@@ -94,11 +94,10 @@
 		<script>
 		var $message = $('.love');
 		$message.addClass('fade-in');
-
 		setTimeout(function(){
 		   $message.removeClass('fade-in').addClass('fade-out');
 		}, <?php echo $timescript; ?>);
 		</script>
-		<?php $db = close(); ?>
+		<?php $db->close(); ?>
 	</body>
 </html>

@@ -62,7 +62,7 @@ require_once("_config.php");
       </div>
 	<br />
 <?php
-if($_POST["addsave"]) {
+if(isset($_POST["addsave"])) {
 	$setnumber=$_POST["number"];
 	if(!preg_match('/[^a-zA-Z0-9]/', $setnumber)) {
 	$datum = date("d.m.Y");
@@ -84,34 +84,34 @@ if($_POST["addsave"]) {
 			else {
 			$db->exec("UPDATE log SET count='".$count."', date='".$datum."', time='".$zeit."'  WHERE number='".$setnumber."'");
 			}
-			sysinfo('success', 'Nummer gespeichert');
+			sysinfo('success', 'Nummer gespeichert', '0');
 	} else {
 	$db->exec("UPDATE log SET count='".$count."', date='".$datum."', time='".$zeit."' WHERE number='".$setnumber."'");
-	sysinfo('danger', 'Diese Nummer existiert schon im System!'); }
+	sysinfo('danger', 'Diese Nummer existiert schon im System!', '0'); }
 	} else {
-	sysinfo('danger', 'Eingabe &uuml;berpr&uuml;fen!!'); }
+	sysinfo('danger', 'Eingabe &uuml;berpr&uuml;fen!!', '0'); }
 	} else {
-	sysinfo('danger', 'Eingabe ung&uuml;ltig!!'); }
+	sysinfo('danger', 'Eingabe ung&uuml;ltig!!', '0'); }
 
 }
 
-if($_GET[add]) {
+if(isset($_GET["add"])) {
 	echo'<br /><br /><br /><br />
 	<form method="post" action="index.php" enctype="multipart/form-data">
 		  <div class="alert alert-info">&nbsp;&nbsp;&nbsp;&nbsp;Nummer eingeben:<br /><div class="col-xs-3"><input type="text" name="number" tabindex="1" autofocus class="form-control"></div><input class="btn btn-default" type="submit" name="addsave" value="speichern" /><br />&nbsp;</div> <br /><br />
 		</form><br /><br /><br /><br /><br /><br /><br /><br /><br />';
 }
-if($_GET["delete"]) {
+if(isset($_GET["delete"])){
 	$db->query("DELETE FROM number WHERE number='".$_GET["number"]."'");
-	sysinfo('warning', 'Nummer gel&ouml;scht!');
+	sysinfo('warning', 'Nummer gel&ouml;scht!', '0');
 }
-if($_POST["remove"] AND $_POST['enter'] == $set['clean']) {
+if(isset($_POST["remove"]) AND isset($_POST['enter']) == $set['clean']) {
 	$db->query("DELETE FROM number");
 	$db->query("DELETE FROM log");
 	echo'<div class="alert alert-warning"><i class="fa fa-chain-broken"></i> Alle Nummern aus dem System entfernt!</div>';
 	redirect("index.php",$error_time);
 }
-if($_GET["testmode"]) {
+if(isset($_GET["testmode"])) {
 	$db->exec("UPDATE settings SET test='1' WHERE userID='1'");
 	$db->query("DELETE FROM number");
 	$db->exec("INSERT INTO number (number) values('01')");
@@ -129,17 +129,17 @@ if($_GET["testmode"]) {
 	echo'<div class="alert alert-warning"><i class="fa fa-arrows"></i> </div>';
 	sysinfo('warning', 'Kalibrierung aktiviert!','1');
 }
-if($_GET["css"]) {
+if(isset($_GET["css"])) {
 	$zeit = date("H:i:s");
 	$db->exec("UPDATE settings SET css='".$zeit."' WHERE userID='1'");
-	sysinfo('info', 'CSS Reset erfolgreich');
+	sysinfo('info', 'CSS Reset erfolgreich','0');
 }
-if($_GET["testmode_off"]) {
+if(isset($_GET["testmode_off"])) {
 	$db->exec("UPDATE settings SET test='0' WHERE userID='1'");
 	$db->query("DELETE FROM number");
 	sysinfo('warning', 'Kalibrierung deaktiviert!','1');
 }
-if($_POST["saveset"]) {
+if(isset($_POST["saveset"])) {
 	$refresh=$_POST["refresh"];
 	$static=$_POST["static"];
 	$time=$_POST["refresh_time"];
@@ -158,7 +158,7 @@ if($_POST["saveset"]) {
 		$db->exec("UPDATE settings SET username='".$user."', password='".$pass."', refresh='".$refresh."', error='".$e_time."', style='".$style."', static='".$static."', refresh_time='".$time."', clean='".$clean."', banner='".$banner."', banner_text='".$banner_text."', blink='".$blink."', arrow='".$arrow."' WHERE userID='1'");
 		sysinfo('success', 'Einstellungen gespeichert','1');
 	}
-else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); }
+else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!','0'); }
 
 }
 
@@ -180,7 +180,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 			  </span>
 			</div></div>
 		</form>
-		<h4>'.$eintrag.'</h4>
+
 		<table class="table table-striped">
         <thead>
           <tr>
@@ -194,8 +194,8 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 		while($ausgabe = $ds->fetchArray(SQLITE3_ASSOC)) {
 			echo'<tr>
             <td width="25%"></td>
-            <td class="text-center">'.$ausgabe[number].'</td>
-            <td class="text-center"><a class="btn btn-danger" href="index.php?delete=1&number='.$ausgabe[number].'"><i class="fa fa-trash-o"></i> l&ouml;schen</a></td>
+            <td class="text-center">'.$ausgabe["number"].'</td>
+            <td class="text-center"><a class="btn btn-danger" href="index.php?delete=1&number='.$ausgabe["number"].'"><i class="fa fa-trash-o"></i> l&ouml;schen</a></td>
 			<td width="25%"></td>
 		  </tr>
 		  ';
@@ -398,13 +398,13 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						$topn = 1;
 						while($top=$to->fetchArray(SQLITE3_ASSOC)) {
 						if($topn == 1) {
-							$toplatz1 = $top[number];
+							$toplatz1 = $top["number"];
 						}
 						elseif($topn == 2) {
-							$toplatz2 = $top[number];
+							$toplatz2 = $top["number"];
 						}
 						elseif($topn == 3) {
-							$toplatz3 = $top[number];
+							$toplatz3 = $top["number"];
 						}
 						$topn++;
 						}
@@ -462,7 +462,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 					$anz=count($dslog);
 					$cmax=$db->query("SELECT count FROM log ORDER BY count DESC LIMIT 1");
 					$cmax=$cmax->fetchArray(SQLITE3_ASSOC);
-					$cmax = $cmax[count];
+					$cmax = $cmax["count"];
 
 					if($anz) {
 					echo'<table class="table table-bordered text-center">
@@ -475,7 +475,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 						</thead>
 						<tbody>';
 						while($alog = $dslog->fetchArray(SQLITE3_ASSOC)) {
-						$counter = $alog['count'];
+						$counter = $alog["count"];
 						$prozent = $counter/$cmax*100;
 						$prozent = round($prozent);
 							echo'<tr>
@@ -486,8 +486,8 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 							  </div>
 							</div>
 							</td>
-							<td>'.$alog[date].' <b>'.$alog[time].'</b></td>
-							<td>'.$alog[number].'</td>
+							<td>'.$alog["date"].' <b>'.$alog["time"].'</b></td>
+							<td>'.$alog["number"].'</td>
 						  </tr>
 						  ';
 						} echo'</tbody>
@@ -505,7 +505,7 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 		</div>
 		 	<div class="footer">
 	<div class="container text-center">
-	<p>&copy; <?php echo date(Y); ?> by <a href="http://www.atworkz.de" target="_blank">@workz.de</a> | Lovebox <?php echo $system_version; ?> </p>
+	<p>&copy; <?php echo date("Y"); ?> by <a href="http://www.atworkz.de" target="_blank">@workz.de</a> | Lovebox <?php echo $system_version; ?> </p>
       </div>
 	</div>
 
@@ -513,14 +513,14 @@ else { sysinfo('danger', 'Fehler! - Bitte die Eingaben &uuml;berpr&uuml;fen!'); 
 	<?php
 	}else{ //Ende Sesson
 
-if ($logedout){
+if (isset($logedout)){
 //Falls man ausgeloggt wurde, wird nun hier eine Erfolgsmeldung angezeigt
-	sysinfo('success', '<i class="fa fa-check"></i> Sie wurden erfolgreich ausgeloggt.');
+	sysinfo('success', '<i class="fa fa-check"></i> Sie wurden erfolgreich ausgeloggt.', '0');
 }
 echo ' </div>
 		</div>';
 if(isset($_POST['Login'])){
-sysinfo('danger', 'Die eingegebenen Login-Daten sind nicht korrekt!'); }
+sysinfo('danger', 'Die eingegebenen Login-Daten sind nicht korrekt!','0'); }
 ?>
 
 <div class="container">
@@ -546,7 +546,7 @@ sysinfo('danger', 'Die eingegebenen Login-Daten sind nicht korrekt!'); }
 	</div>
 <?php
 }
-$db = close();
+$db->close();
 ?>
 
 

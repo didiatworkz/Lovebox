@@ -4,6 +4,7 @@
 - [Requirements](#requirements)
 - [Install instructions](#installation)
 - [Screenshots](#screenshots)
+- [Demo](#demo)
 
 ## What is this?
 Lovebox is a monitor system for projectors.
@@ -33,4 +34,8 @@ Settings (Backend)
 Monitor Window (Frontend)
 
 ![Screenshot show](http://www.atworkz.de/_git/lovebox/show.png)
+
+
+## Demo
+<a href="http://demo.atworkz.de/lovebox/index.php" target="_blank">Live-Demo</a>
 

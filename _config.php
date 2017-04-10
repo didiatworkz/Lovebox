@@ -41,16 +41,8 @@ function sysinfo($status, $message, $refresh) {
 }
 
 // Login Check
-
 $set = $db->query("SELECT * FROM settings WHERE userID=1");
 $set = $set->fetchArray(SQLITE3_ASSOC);
-
 $Zugangspasswort = $set['password'];
 $Benutzername    = $set['username'];
-
-
-if($_GET['restart'] == date('d.m.Y')) {
-	$db->exec("UPDATE settings SET username='demo', password='fe01ce2a7fbac8fafaed7c982a04e229', refresh='1', refresh_time='10', clean='clean' WHERE userID='1'");
-			sysinfo('warning', 'Reset durchgeführt','1');
-}
 ?>

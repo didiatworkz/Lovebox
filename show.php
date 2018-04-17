@@ -18,8 +18,9 @@
 				}
 				$wert = $start + 12;
 				if($set_refresh == '1') {
+					$inhalt = 0;
 					$result = $db->query("SELECT * FROM number");
-					$inhalt = count($result);
+					while($ausgabe = $result->fetchArray(SQLITE3_ASSOC)) $inhalt++;
 						if($wert < $inhalt){
 							$site = 'show.php?start='.$wert;
 						}

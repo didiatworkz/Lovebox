@@ -307,7 +307,8 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background: #000 url('../img/bg.jpg') no-repeat center center;
+  background: #000 url('../img/bg.jpg') no-repeat top center;
+  background-size: cover;
 }
 
 input,
